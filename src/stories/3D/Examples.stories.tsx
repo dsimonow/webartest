@@ -2,6 +2,7 @@
 
 
 import {Setup} from '../Setup'
+import { Vector3 } from 'three'
 import { Blob, Logo, Duck, Dog } from '../../components/canvas/Examples';
 
 
