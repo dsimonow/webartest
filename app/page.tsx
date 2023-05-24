@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
-import { ARButton, XR } from '@react-three/xr'
+import { Layout } from '@/components/dom/Layout'
 
 const Logo = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Logo), { ssr: false })
 const Dog = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Dog), { ssr: false })
@@ -27,6 +27,7 @@ const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mo
 export default function Page() {
   return (
     <>
+    <Layout>
       <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row lg:w-4/5'>
         {/* jumbo */}
         <div className='flex w-full flex-col items-start justify-center p-12 text-center md:w-2/5 md:text-left'>
@@ -38,7 +39,7 @@ export default function Page() {
         <div className='w-full text-center md:w-3/5'>
           <View className='flex h-96 w-full flex-col items-center justify-center'>
             <Suspense fallback={null}>
-              <Logo route='/blob' scale={0.6} position={[0, 0, 0]} />
+              <Logo route='/ar' scale={0.6} position={[0, 0, 0]} />
               <Common color={'lightgreen'} />
             </Suspense>
           </View>
@@ -46,6 +47,7 @@ export default function Page() {
       </div>
 
       <div className='mx-auto flex w-full flex-col flex-wrap items-center p-12 md:flex-row  lg:w-4/5'>
+        
         {/* first row */}
         <div className='relative h-48 w-full py-6 sm:w-1/2 md:my-12 md:mb-40'>
           <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>This is adAR</h2>
@@ -78,22 +80,9 @@ export default function Page() {
             scroll along, resize, etc.
           </p>
         </div>
-        {/* Third and XR row */}
-        <div className='relative h-48 w-full py-6 sm:w-1/2 md:my-12 md:mb-40'>
-          <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>Enter Mixed Reality</h2>
-          <p className='mb-8 text-gray-600'>Your personal Assistant in your Insurance AR Experience.
-            He will help you get to know this new World!</p>
-        </div>
-        <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
-          <ARButton />
-          <View orbit className='relative h-full  sm:h-48 sm:w-full'>
-            <XR>
-              <Dog scale={2} position={[0, -1.6, 0]} rotation={[0.0, -0.3, 0]} />
-              <Common color={'lightpink'} />
-            </XR>
-          </View>
-        </div>
+        
       </div>
+      </Layout>
     </>
   )
 }
