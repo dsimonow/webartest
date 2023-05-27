@@ -66,3 +66,4 @@ export function Dog(props) {
 
   return <primitive object={scene} {...props} />
 }
+
