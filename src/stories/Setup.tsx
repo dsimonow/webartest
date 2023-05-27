@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Vector3 } from 'three'
 import { Canvas, Props as CanvasProps } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
+import Scrollticker from '../templates/Scroll'
 
 type Props = React.PropsWithChildren<
   CanvasProps & {
@@ -26,9 +27,11 @@ export const Setup = ({
       <>
         <ambientLight intensity={0.8} />
         <pointLight intensity={1} position={[0, 6, 0]} />
+        <Scrollticker />
       </>
     )}
     {controls && <OrbitControls makeDefault />}
+    
   </Canvas>
 )
 
@@ -46,6 +49,7 @@ export const Setup3D = ({
       <>
         <ambientLight intensity={0.8} />
         <pointLight intensity={1} position={[0, 6, 0]} />
+        <Scrollticker />
       </>
     )}
     {controls && <OrbitControls makeDefault />}
@@ -66,6 +70,7 @@ export const SetupAR = ({
       <>
         <ambientLight intensity={0.8} />
         <pointLight intensity={1} position={[0, 6, 0]} />
+        <Scrollticker />
       </>
     )}
     {controls && <OrbitControls makeDefault />}

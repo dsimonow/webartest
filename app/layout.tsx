@@ -1,4 +1,5 @@
 import { Layout } from '@/components/dom/Layout'
+import Scroll from '../src/templates/Scroll'
 import '@/global.css'
 
 export const metadata = {
@@ -15,8 +16,10 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body>
+        <Scroll >
         {/* To avoid FOUT with styled-components wrap Layout with StyledComponentsRegistry https://beta.nextjs.org/docs/styling/css-in-js#styled-components */}
         {children}
+        </Scroll>
       </body>
     </html>
   )
