@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { Layout } from '@/components/dom/Layout'
+import Scroll from '../src/templates/Scroll'
 
 const Logo = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Logo), { ssr: false })
 const Dog = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Dog), { ssr: false })
@@ -27,62 +28,62 @@ const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mo
 export default function Page() {
   return (
     <>
-    <Layout>
-      <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row lg:w-4/5'>
-        {/* jumbo */}
-        <div className='flex w-full flex-col items-start justify-center p-12 text-center md:w-2/5 md:text-left'>
-          <p className='w-full uppercase'>Bachelorarbeit Simonow</p>
-          <h1 className='my-4 text-5xl font-bold leading-tight'>Adesso AR Insure</h1>
-          <p className='mb-8 text-2xl leading-normal'>Landingpage for the AR Insurance Experience</p>
+      <Layout>
+        <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row lg:w-4/5'>
+          {/* jumbo */}
+          <div className='flex w-full flex-col items-start justify-center p-12 text-center md:w-2/5 md:text-left'>
+            <p className='w-full uppercase'>Bachelorarbeit Simonow</p>
+            <h1 className='my-4 text-5xl font-bold leading-tight'>Adesso AR Insure</h1>
+            <p className='mb-8 text-2xl leading-normal'>Landingpage for the AR Insurance Experience</p>
+          </div>
+
+          <div className='w-full text-center md:w-3/5'>
+            <View className='flex h-96 w-full flex-col items-center justify-center'>
+              <Suspense fallback={null}>
+                <Logo route='/ar' scale={0.6} position={[0, 0, 0]} />
+                <Common color={'lightgreen'} />
+              </Suspense>
+            </View>
+          </div>
         </div>
 
-        <div className='w-full text-center md:w-3/5'>
-          <View className='flex h-96 w-full flex-col items-center justify-center'>
-            <Suspense fallback={null}>
-              <Logo route='/ar' scale={0.6} position={[0, 0, 0]} />
-              <Common color={'lightgreen'} />
-            </Suspense>
-          </View>
+        <div className='mx-auto flex w-full flex-col flex-wrap items-center p-12 md:flex-row  lg:w-4/5'>
+          
+          {/* first row */}
+          <div className='relative h-48 w-full py-6 sm:w-1/2 md:my-12 md:mb-40'>
+            <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>This is adAR</h2>
+            <p className='mb-8 text-gray-600'>Your personal Assistant in your Insurance AR Experience. 
+            He will help you get to know this new World!</p>
+          </div>
+          <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
+            <View orbit className='relative h-full  sm:h-48 sm:w-full'>
+              <Suspense fallback={null}>
+                <Dog scale={2} position={[0, -1.6, 0]} rotation={[0.0, -0.3, 0]} />
+                <Common color={'lightpink'} />
+              </Suspense>
+            </View>
+          </div>
+          {/* second row */}
+          <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
+            <View orbit className='relative h-full animate-bounce sm:h-48 sm:w-full'>
+              <Suspense fallback={null}>
+                <Duck route='/blob' scale={2} position={[0, -1.6, 0]} />
+                <Common color={'lightblue'} />
+              </Suspense>
+            </View>
+          </div>
+          <div className='w-full p-6 sm:w-1/2'>
+            <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>Dom and 3D are synchronized</h2>
+            <p className='mb-8 text-gray-600'>
+              3D Divs are renderer through the View component. It uses gl.scissor to cut the viewport into segments. You
+              tie a view to a tracking div which then controls the position and bounds of the viewport. This allows you to
+              have multiple views with a single, performant canvas. These views will follow their tracking elements,
+              scroll along, resize, etc.
+            </p>
+          </div>
+          
         </div>
-      </div>
-
-      <div className='mx-auto flex w-full flex-col flex-wrap items-center p-12 md:flex-row  lg:w-4/5'>
-        
-        {/* first row */}
-        <div className='relative h-48 w-full py-6 sm:w-1/2 md:my-12 md:mb-40'>
-          <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>This is adAR</h2>
-          <p className='mb-8 text-gray-600'>Your personal Assistant in your Insurance AR Experience. 
-          He will help you get to know this new World!</p>
-        </div>
-        <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
-          <View orbit className='relative h-full  sm:h-48 sm:w-full'>
-            <Suspense fallback={null}>
-              <Dog scale={2} position={[0, -1.6, 0]} rotation={[0.0, -0.3, 0]} />
-              <Common color={'lightpink'} />
-            </Suspense>
-          </View>
-        </div>
-        {/* second row */}
-        <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
-          <View orbit className='relative h-full animate-bounce sm:h-48 sm:w-full'>
-            <Suspense fallback={null}>
-              <Duck route='/blob' scale={2} position={[0, -1.6, 0]} />
-              <Common color={'lightblue'} />
-            </Suspense>
-          </View>
-        </div>
-        <div className='w-full p-6 sm:w-1/2'>
-          <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>Dom and 3D are synchronized</h2>
-          <p className='mb-8 text-gray-600'>
-            3D Divs are renderer through the View component. It uses gl.scissor to cut the viewport into segments. You
-            tie a view to a tracking div which then controls the position and bounds of the viewport. This allows you to
-            have multiple views with a single, performant canvas. These views will follow their tracking elements,
-            scroll along, resize, etc.
-          </p>
-        </div>
-        
-      </div>
-      </Layout>
+        </Layout>
     </>
   )
 }
