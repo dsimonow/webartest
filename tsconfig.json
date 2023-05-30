@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["react-three-fiber", "jest"],
     "baseUrl": ".",
     "paths": {
       "@/*": [
