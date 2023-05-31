@@ -16,8 +16,23 @@ const meta: Meta<typeof Blob> = {
   decorators: [(Story) => 
   <Setup cameraPosition={new Vector3(10, 10, 10)}>
     <Story />
-  </Setup>]
+  </Setup>
+  ]
 };
+//decorators: [(Story, options) => 
+//{
+//  const { args } = options;
+//  if (args.disableDecorator) {
+//    return <Story {...options} />;
+//  }
+//  return (
+//    <Setup cameraPosition={new Vector3(10, 10, 10)}>
+//      <Story {...options} />
+//    </Setup>
+//  );
+//}]
+//
+//
 
 export default meta;
 
