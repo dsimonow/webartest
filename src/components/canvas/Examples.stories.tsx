@@ -1,6 +1,5 @@
 // Examples.stories.ts|tsx
 
-
 import type { Meta, StoryObj } from '@storybook/react';
 
 import {Setup} from '../../stories/Setup'
@@ -13,26 +12,18 @@ const meta: Meta<typeof Blob> = {
   title: '3D/Examples',
   component: Blob,
   tags: ['autodocs'],
-  decorators: [(Story) => 
-  <Setup cameraPosition={new Vector3(10, 10, 10)}>
-    <Story />
-  </Setup>
-  ]
+  decorators: [(Story, options) => {
+    const { args } = options;
+    if (args.disableDecorator) {
+      return <Story {...options} />;
+    }
+    return (
+      <Setup cameraPosition={new Vector3(10, 10, 10)}>
+        <Story {...options} />
+      </Setup>
+    );
+  }]
 };
-//decorators: [(Story, options) => 
-//{
-//  const { args } = options;
-//  if (args.disableDecorator) {
-//    return <Story {...options} />;
-//  }
-//  return (
-//    <Setup cameraPosition={new Vector3(10, 10, 10)}>
-//      <Story {...options} />
-//    </Setup>
-//  );
-//}]
-//
-//
 
 export default meta;
 
