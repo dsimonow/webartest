@@ -11,8 +11,7 @@ jest.mock('next/router', () => ({
 }))
 
 const { BlobExample, LogoExample, DuckExample, DogExample} = composeStories(stories, 
-    { decorators: [(Story) => <Story/> ],
-    args: { disableDecorator: true}
+    { args: { disableDecorator: true}
 });
 
 test('renders Blob default', async () => {
