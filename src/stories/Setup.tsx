@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Vector3 } from 'three'
 import { Canvas, Props as CanvasProps } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, PivotControls } from '@react-three/drei'
 
 type Props = React.PropsWithChildren<
   CanvasProps & {
@@ -28,7 +28,7 @@ export const Setup = ({
         <pointLight intensity={1} position={[0, 6, 0]} />
       </>
     )}
-    {controls && <OrbitControls makeDefault />}
+    {controls}
     
   </Canvas>
 )
@@ -49,7 +49,7 @@ export const Setup3D = ({
         <pointLight intensity={1} position={[0, 6, 0]} />
       </>
     )}
-    {controls && <OrbitControls makeDefault />}
+    {controls }
   </Canvas>
 )
 
@@ -69,6 +69,6 @@ export const SetupAR = ({
         <pointLight intensity={1} position={[0, 6, 0]} />
       </>
     )}
-    {controls && <OrbitControls makeDefault />}
+    {controls }
   </Canvas>
 )
