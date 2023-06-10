@@ -8,10 +8,15 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 /** @type {import('jest').Config} */
 const config = {
+
+    globals: {
+        "IS_REACT_ACT_ENVIRONMENT": true
+    },
     // Add more setup options before each test is run
-     setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
+    setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
 
     testEnvironment: 'jest-environment-jsdom',
+    //testEnvironment: 'jsdom',
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
     },

@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/jest';
+import { within, userEvent } from '@storybook/testing-library';
 
 import { Button } from './Button';
 
@@ -25,10 +27,22 @@ export const Primary: Story = {
   },
 };
 
+Primary.play = async ({args, canvasElement}) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole('button'));
+  await expect(args.onClick).toHaveBeenCalled();
+};
+
 export const Secondary: Story = {
   args: {
     label: 'Button',
   },
+};
+
+Secondary.play = async ({ args, canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole('button'));
+  await expect(args.onClick).toHaveBeenCalled();
 };
 
 export const Large: Story = {
@@ -38,9 +52,21 @@ export const Large: Story = {
   },
 };
 
+Large.play = async ({ args, canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole('button'));
+  await expect(args.onClick).toHaveBeenCalled();
+};
+
 export const Small: Story = {
   args: {
     size: 'small',
     label: 'Button',
   },
+};
+
+Small.play = async ({ args, canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole('button'));
+  await expect(args.onClick).toHaveBeenCalled();
 };

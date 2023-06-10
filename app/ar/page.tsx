@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-
+import { Canvas } from '@react-three/fiber'
 import { ARButton, XR } from '@react-three/xr'
 
 const Dog = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Dog), { ssr: false })
@@ -29,11 +29,11 @@ export default function Page() {
   return (
     <>
       <ARButton />
-      <View className='h-full w-full m-0 p-0 ' orbit >
-          <XR>
-            <HitTest />
-          </XR>
-      </View>
+      <Canvas>
+        <XR>
+          <HitTest />
+        </XR>
+      </Canvas>
     </>
   )
 }
