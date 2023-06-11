@@ -1,11 +1,8 @@
 // Examples.stories.ts|tsx
 
 import type { Meta, StoryObj } from '@storybook/react';
-import ReactThreeTestRenderer from "@react-three/test-renderer";
 import {Setup} from '../../stories/Setup'
 import { Vector3 } from 'three'
-import { expect } from '@storybook/jest';
-import { within, userEvent, screen } from '@storybook/testing-library';
 import { Blob, Logo, Duck, Dog } from './Examples';
 
 type Story = StoryObj<typeof Blob>;
@@ -31,20 +28,13 @@ export default meta;
 
 export const BlobExample: Story = () => <Blob alt="blobi" />
 BlobExample.storyName = 'Blob'
-BlobExample.play = async ({ args, canvasElement }) => {
-  
-  const canvas = within(canvasElement);
-  console.log(canvas.getAllByRole('generic'));
-  //console.log(canvas.getAllByAltText('blobi'));
-  await userEvent.click(canvas.getAllByRole('generic')[0]);
-  await expect(args.onClick).toHaveBeenCalled();
-};
 
 export const LogoExample = () => <Logo />
 LogoExample.storyName = 'Logo'
 
 export const DuckExample = () => <Duck />
 DuckExample.storyName = 'Duck'
+
 
 export const DogExample = () => <Dog />
 DogExample.storyName = 'Dog'

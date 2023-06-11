@@ -6,14 +6,17 @@ import * as THREE from 'three'
 import { useMemo, useRef, useState } from 'react'
 import { Line, useCursor, MeshDistortMaterial } from '@react-three/drei'
 import { useRouter } from 'next/navigation'
+import * as Stdlib from 'three-stdlib'
+import { useLoader } from '@react-three/fiber'
+
 
 export const Blob = ({ route = '/', ...props }) => {
   const router = useRouter()
   const [hovered, hover] = useState(false)
   useCursor(hovered)
+
   return (
     <mesh
-      
       onClick={() => router.push(route)}
       onPointerOver={() => hover(true)}
       onPointerOut={() => hover(false)}
@@ -62,9 +65,12 @@ export function Duck(props) {
 
   return <primitive object={scene} {...props} />
 }
-export function Dog(props) {
-  const { scene } = useGLTF('/dog.glb')
 
+
+export function Dog(props) {
+  let { scene }= useGLTF('/dog.glb')
+
+  //const gltf = useLoader(Stdlib.GLTFLoader, '/dog.glb')
   return <primitive object={scene} {...props} />
 }
 
