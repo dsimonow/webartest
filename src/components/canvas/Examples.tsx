@@ -6,8 +6,7 @@ import * as THREE from 'three'
 import { useMemo, useRef, useState } from 'react'
 import { Line, useCursor, MeshDistortMaterial } from '@react-three/drei'
 import { useRouter } from 'next/navigation'
-import * as Stdlib from 'three-stdlib'
-import { useLoader } from '@react-three/fiber'
+import { GLTF } from 'three-stdlib'
 
 
 export const Blob = ({ route = '/', ...props }) => {
@@ -58,19 +57,80 @@ export const Logo = ({ route = '/blob', ...props }) => {
   )
 }
 
-export function Duck(props) {
+/*
+export function Ducks(props) {
   const { scene } = useGLTF('/duck.glb')
 
   useFrame((state, delta) => (scene.rotation.y += delta))
 
   return <primitive object={scene} {...props} />
 }
+*/
 
+type DuckGLTFResult = GLTF & {
+  nodes: {
+    character_duck: THREE.Mesh
+    Cube1338: THREE.Mesh
+    Cube1338_1: THREE.Mesh
+  }
+  materials: {
+    ['White.026']: THREE.MeshStandardMaterial
+    ['Yellow.043']: THREE.MeshStandardMaterial
+    ['Black.027']: THREE.MeshStandardMaterial
+  }
+}
+
+export function Duck(props: JSX.IntrinsicElements['group']) {
+  const { nodes, materials } = useGLTF('/duck-transformed.glb') as DuckGLTFResult
+  const refGroup = useRef(null)
+  useFrame((state, delta) => (refGroup.current.rotation.y += delta))
+  return (
+    <group ref={refGroup} {...props} dispose={null}>
+      <mesh geometry={nodes.character_duck.geometry} material={materials['White.026']} rotation={[Math.PI / 2, 0, 0]} />
+      <group position={[0, 0.704, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <mesh geometry={nodes.Cube1338.geometry} material={materials['Yellow.043']} />
+        <mesh geometry={nodes.Cube1338_1.geometry} material={materials['Black.027']} />
+      </group>
+    </group>
+  )
+}
+useGLTF.preload('/duck-transformed.glb')
 
 export function Dog(props) {
   let { scene }= useGLTF('/dog.glb')
-
+  //const { nodes, materials } = useGLTF('/dog.glb')
   //const gltf = useLoader(Stdlib.GLTFLoader, '/dog.glb')
   return <primitive object={scene} {...props} />
 }
 
+
+// gltfjsx verwendet um eine ordentliche Type Struktur für TS zu erschaffen
+// verwendet im Mock 
+// npx gltfjsx public\duck.glb --transform --types
+type DogGLTFResult = GLTF & {
+  nodes: {
+    character_dog: THREE.Mesh
+    Cube1339: THREE.Mesh
+    Cube1339_1: THREE.Mesh
+  }
+  materials: {
+    ['Beige.017']: THREE.MeshStandardMaterial
+    ['Red.034']: THREE.MeshStandardMaterial
+    ['Black.026']: THREE.MeshStandardMaterial
+  }
+}
+
+export function Dogs(props: JSX.IntrinsicElements['group']) {
+  const { nodes, materials } = useGLTF('/dog-transformed.glb') as DogGLTFResult
+  return (
+    <group {...props} dispose={null}>
+      <mesh geometry={nodes.character_dog.geometry} material={materials['Beige.017']} rotation={[Math.PI / 2, 0, 0]} />
+      <group position={[0, 0.704, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <mesh geometry={nodes.Cube1339.geometry} material={materials['Red.034']} />
+        <mesh geometry={nodes.Cube1339_1.geometry} material={materials['Black.026']} />
+      </group>
+    </group>
+  )
+}
+
+useGLTF.preload('/dog-transformed.glb')

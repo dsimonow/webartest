@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Vector3 } from 'three'
 import { Canvas, Props as CanvasProps } from '@react-three/fiber'
 import { OrbitControls, PivotControls } from '@react-three/drei'
+import { XR } from '@react-three/xr'
 
 type Props = React.PropsWithChildren<
   CanvasProps & {
@@ -62,13 +63,16 @@ export const SetupAR = ({
   ...restProps
 }: Props) => (
   <Canvas shadows camera={{ position: cameraPosition, fov: cameraFov }} {...restProps}>
-    {children}
-    {lights && (
-      <>
-        <ambientLight intensity={0.8} />
-        <pointLight intensity={1} position={[0, 6, 0]} />
-      </>
-    )}
-    {controls }
+    <XR>
+      {children}
+      {lights && (
+        <>
+          <ambientLight intensity={0.8} />
+          <pointLight intensity={1} position={[0, 6, 0]} />
+        </>
+      )}
+      {controls }
+      
+    </XR>
   </Canvas>
 )

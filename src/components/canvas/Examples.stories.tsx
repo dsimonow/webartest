@@ -26,7 +26,7 @@ const meta: Meta<typeof Blob> = {
 
 export default meta;
 
-export const BlobExample: Story = () => <Blob alt="blobi" />
+export const BlobExample: Story = () => <Blob />
 BlobExample.storyName = 'Blob'
 
 export const LogoExample = () => <Logo />
@@ -34,7 +34,6 @@ LogoExample.storyName = 'Logo'
 
 export const DuckExample = () => <Duck />
 DuckExample.storyName = 'Duck'
-
 
 export const DogExample = () => <Dog />
 DogExample.storyName = 'Dog'
