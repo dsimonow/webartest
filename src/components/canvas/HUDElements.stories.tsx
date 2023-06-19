@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { HitTest } from './HitTest'
+import { HUDElements } from './HUDElements'
 import { Setup } from '../../stories/Setup'
 import { Vector3 } from 'three'
 import { OrbitControls } from '@react-three/drei'
@@ -7,15 +7,14 @@ import { XR } from "@react-three/xr";
 
 interface Args {
     disableDecorator?: boolean;
-    // ... other properties
 }
 
-type Story = StoryObj<typeof HitTest>;
+type Story = StoryObj<typeof HUDElements>;
 
 // Finder Test der HitTest Komponente da die einzelnen Komponenten ausserhalb von AR Testbar sein sollen
-const meta: Meta<typeof HitTest> = {
-    title: '3D/Finder',
-    component: HitTest,
+const meta: Meta<typeof HUDElements> = {
+    title: '3D/HUD',
+    component: HUDElements,
     tags: ['autodocs'],
     decorators: [(Story, options) => {
         const args = options.args as Args;
@@ -38,5 +37,5 @@ const meta: Meta<typeof HitTest> = {
 
 export default meta;
 
-export const HitTestExample: Story = () => <HitTest />
-HitTestExample.storyName = 'Finder'
+export const HUDElementsExample: Story = () => <HUDElements />
+HUDElementsExample.storyName = 'HUD'

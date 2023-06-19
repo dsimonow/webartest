@@ -8,7 +8,6 @@ import { Line, useCursor, MeshDistortMaterial } from '@react-three/drei'
 import { useRouter } from 'next/navigation'
 import { GLTF } from 'three-stdlib'
 
-
 export const Blob = ({ route = '/', ...props }) => {
   const router = useRouter()
   const [hovered, hover] = useState(false)

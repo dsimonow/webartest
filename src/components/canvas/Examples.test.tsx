@@ -4,15 +4,12 @@ import * as stories from './Examples.stories'
 import { useRouter } from 'next/navigation';
 import * as Fiber from '@react-three/fiber';
 import * as THREE from 'three'
-import * as Stdlib from 'three-stdlib'
-import * as Drei from '@react-three/drei';
 import { GLTF } from 'three-stdlib';
 
 jest.mock('next/navigation', () => ({
     useRouter: jest.fn() 
 }))
 const mockOn = jest.fn()
-
 
 const { BlobExample, LogoExample, DuckExample, DogExample} = composeStories(stories, 
     { args: { disableDecorator: true}
@@ -116,7 +113,7 @@ test('Dog useGLTF Boilerplate', async () => {
     )
     // Alle Mesh Komponenten finden, aus der gltfjsx generierten Komponente ist es klar das es 3 sind für Dog
     // in der Übersicht wird der Type in klein geschrieben, im Element ist der echte in groß
-    //console.log(renderer.scene.children[0]._fiber.__r3f)
+    //wconsole.log(renderer.scene.children[0]._fiber.__r3f)
     const mesh = renderer.scene.findAllByType('Group')
     expect(mesh.length).toBe(1)
     }

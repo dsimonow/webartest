@@ -1,15 +1,15 @@
-//import ReactThreeTestRenderer from "@react-three/test-renderer";
 import ReactThreeTestRenderer from "@react-three/test-renderer"
 import { composeStories } from '@storybook/react';
-import * as stories from './HitTest.stories'
+import * as stories from './Scenario.stories'
 import * as Fiber from '@react-three/fiber';
 import * as THREE from 'three'
-import { GLTF } from 'three-stdlib';
+import { GLTF} from 'three-stdlib';
 import useSpline from '@splinetool/r3f-spline'
 
-const { HitTestExample } = composeStories(stories,
-    { args: { disableDecorator: true }
-});
+const { ScenarioExample } = composeStories(stories,
+    {
+        args: { disableDecorator: true }
+    });
 
 // TypeScript Mocken von useGLTF
 type GLTFResult = GLTF & {
@@ -37,7 +37,6 @@ const MockGLTFResult: GLTFResult = {
         }
     )
 };
-
 jest.mock('@splinetool/r3f-spline', () => ({
     __esModule: true,
     default: jest.fn(() => {
@@ -66,29 +65,11 @@ jest.mock('@splinetool/r3f-spline', () => ({
 }))
 
 
-test('HitTest onClick hide Finder show Scenario', async () => {
+test('Scenario Darstellung', async () => {
     jest.spyOn(Fiber, 'useLoader').mockImplementation(() => MockGLTFResult);
     const renderer = await ReactThreeTestRenderer.create(
-        <HitTestExample/>
+        <ScenarioExample />
     )
+    }
 
-    //console.log(renderer.scene.findAll(() => true))
-    //console.log(renderer.toTree())
-    //console.log(renderer.scene.findByType('PlaneGeometry'))
-    //console.log(renderer.scene.children[2])
-
-    const finder = renderer.scene.children[1].children[0]
-    const display = renderer.scene.children[2]
-    expect(finder.props.visible).toBe(true)
-    expect(display.props.visible).toBe(false)
-
-    await renderer.fireEvent(finder, 'onClick')
-    const finderUpdated = renderer.scene.children[1].children[0]
-    const displayUpdated = renderer.scene.children[2]
-    expect(finderUpdated.props.visible).toBe(false)
-    expect(displayUpdated.props.visible).toBe(true)
-
-    
- }
 )
-

@@ -1,36 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { HitTest } from './HitTest'
+import { Scenario } from './Scenario'
 import { Setup } from '../../stories/Setup'
 import { Vector3 } from 'three'
 import { OrbitControls } from '@react-three/drei'
-import { XR } from "@react-three/xr";
 
 interface Args {
     disableDecorator?: boolean;
     // ... other properties
 }
 
-type Story = StoryObj<typeof HitTest>;
+type Story = StoryObj<typeof Scenario>;
 
-// Finder Test der HitTest Komponente da die einzelnen Komponenten ausserhalb von AR Testbar sein sollen
-const meta: Meta<typeof HitTest> = {
-    title: '3D/Finder',
-    component: HitTest,
+const meta: Meta<typeof Scenario> = {
+    title: '3D/Scenario',
+    component: Scenario,
     tags: ['autodocs'],
     decorators: [(Story, options) => {
         const args = options.args as Args;
         if (args.disableDecorator) {
             return (
-                <XR>
                     <Story {...options} />
-                </XR>
             );
         }
         return (
-            <Setup cameraPosition={new Vector3(1, 1, 1)}>
-                <XR>
+            <Setup cameraPosition={new Vector3(5, 5, 5)}>
                     <Story {...options} />
-                </XR>
             </Setup>
         );
     }]
@@ -38,5 +32,5 @@ const meta: Meta<typeof HitTest> = {
 
 export default meta;
 
-export const HitTestExample: Story = () => <HitTest />
-HitTestExample.storyName = 'Finder'
+export const ScenarioExample: Story = () => <Scenario scale={1}/>
+ScenarioExample.storyName = 'Scenario'

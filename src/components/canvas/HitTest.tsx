@@ -1,19 +1,19 @@
 'use client'
 
-
-
-import { useState, useRef } from "react";
-import { useHitTest, useInteraction, Interactive } from "@react-three/xr";
+import { useState, useRef, Suspense } from "react";
+import { useHitTest, useInteraction, Interactive, XR } from "@react-three/xr";
 import { OrbitControls, Grid, Torus, PerspectiveCamera, Text, PivotControls, TransformControls, Stage } from "@react-three/drei";
 import { Vector3 } from 'three'
 import { useThree } from "@react-three/fiber";
 import { Common } from './View';
 import { Scenario } from './Scenario'
-
-
-
+import { useTransformControlsStore } from "./store";
 
 export function HitTest() {
+  // StateStore
+  const transformControlsMode = useTransformControlsStore((state) => state.mode);
+  const transformControlsEnabled = useTransformControlsStore((state) => state.enabled);
+
   const ref = useRef(null);
   
   // useState für updaten des Wertes
@@ -37,12 +37,9 @@ export function HitTest() {
   
   return (
     <>
-      
-      <PerspectiveCamera makeDefault position={[0, 0, 10]}>
-      </PerspectiveCamera>
-      <Interactive onSelect={() => setHitenabled(true) } >
+      <Interactive onSelect={() => setHitenabled(true)} >
         <Torus
-          visible={!hitEnabled} 
+          visible={!hitEnabled}
           ref={ref}
           scale={0.1}
           position={[fPosition.x, fPosition.y, fPosition.z]}
@@ -50,18 +47,18 @@ export function HitTest() {
           rotation-x={5}
         />
       </Interactive>
-      <group visible={hitEnabled}>
-        <TransformControls mode="scale" enabled={hitEnabled} position={[fPosition.x, fPosition.y, fPosition.z]} >
-            <Scenario />
+      
+      <group visible={hitEnabled} >
+        <TransformControls 
+        mode={transformControlsMode}  
+        enabled={transformControlsEnabled} 
+        showX={transformControlsEnabled} showY={transformControlsEnabled} showZ={transformControlsEnabled}  
+        position={[fPosition.x, fPosition.y, fPosition.z]} >
+            <Scenario  />
         </TransformControls>
       </group>
-      <Grid cellThickness={1.5} position={[fPosition.x, fPosition.y, fPosition.z]} />
       
-      <ambientLight intensity={0.5} />
-      <pointLight position={[20, 30, 10]} intensity={1} />
-      <pointLight position={[-10, -10, -10]} color='blue' />
-      <OrbitControls makeDefault />
+  
     </>
   )
 }
-

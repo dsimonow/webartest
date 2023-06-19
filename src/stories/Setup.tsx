@@ -25,11 +25,27 @@ export const Setup = ({
     {children}
     {lights && (
       <>
-        <ambientLight intensity={0.8} />
-        <pointLight intensity={1} position={[0, 6, 0]} />
+        <hemisphereLight name="Default Ambient Light" intensity={0.25} color="#eaeaea" />
+        <directionalLight
+          name="Directional Light"
+          castShadow
+          intensity={0.8}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+          shadow-camera-near={-10000}
+          shadow-camera-far={100000}
+          shadow-camera-left={-1250}
+          shadow-camera-right={1250}
+          shadow-camera-top={1250}
+          shadow-camera-bottom={-1250}
+          position={[274.61, 586.79, 630.88]}
+        />
+        
       </>
     )}
-    {controls}
+    {controls && (
+      <OrbitControls makeDefault />
+    )}
     
   </Canvas>
 )
