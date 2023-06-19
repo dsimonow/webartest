@@ -13,7 +13,7 @@ const config = {
         "IS_REACT_ACT_ENVIRONMENT": true
     },
     // Add more setup options before each test is run
-    setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
+    setupFilesAfterEnv: ['<rootDir>/setupTests.tsx'],
 
     testEnvironment: 'jest-environment-jsdom',
     //testEnvironment: 'jsdom',

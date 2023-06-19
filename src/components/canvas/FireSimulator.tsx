@@ -12,7 +12,6 @@ type FireSimulatorProps = {
     index: number;
 };
 
-
 export function FireSimulator(props: FireSimulatorProps) {
     const index = props.index
     // Store
@@ -44,14 +43,14 @@ export function FireSimulator(props: FireSimulatorProps) {
             //******************* */
             if(stepsDone != true){
             timeRemaining.current -= delta;
-            console.log(timeRemaining.current +"internalstate: "+internalFireState)
+
             // Internal Fire State Progress
             // jedes platzierte Feuer hat einen eigenen Progress
             if ((timeRemaining.current <= 0 && internalFireState == "off")) {
             setInternalFireState("ignite")
             setFireAdjuster(2)
             timeRemaining.current = 40 - (index * 11.6)
-                console.log(index +" Step Ignite " )
+
             }
             if ((timeRemaining.current <= 0 && internalFireState == "ignite")) {
                 if (index < externalFireStates.length - 1) {
@@ -60,13 +59,12 @@ export function FireSimulator(props: FireSimulatorProps) {
                 setInternalFireState("mid")
                 setFireAdjuster(5)
                     timeRemaining.current = 20 - (index * 6.66)
-                console.log(index +" Step Mid ")
+
             }
             if ((timeRemaining.current <= 0 && internalFireState == "mid")) {
                 setInternalFireState("end")
                 setFireAdjuster(10)
                 
-                console.log(index+" Step End ")
                 if(index == 3){
                     setAllStepsDone()
                 }

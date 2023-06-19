@@ -5,16 +5,13 @@ import { useRouter } from 'next/navigation';
 import * as Fiber from '@react-three/fiber';
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib';
-
-jest.mock('next/navigation', () => ({
-    useRouter: jest.fn() 
-}))
-const mockOn = jest.fn()
+import { MockGLTFResult } from '../../../setupTests';
 
 const { BlobExample, LogoExample, DuckExample, DogExample} = composeStories(stories, 
     { args: { disableDecorator: true}
 });
 
+const mockOn = jest.fn()
 test('renders Blob default', async () => {
     (useRouter as jest.Mock).mockReturnValue({ push: mockOn })
     const renderer = await ReactThreeTestRenderer.create(
@@ -73,32 +70,6 @@ test('Hover Testen von Logo', async () => {
     }
 )
 
-// TypeScript Mocken von useGLTF
-type GLTFResult = GLTF & {
-    nodes: Record<string, THREE.Object3D>;
-    materials: Record<string, THREE.Material>;
-};
-const MockGLTFResult: GLTFResult = {
-    animations: [],
-    scene: new THREE.Group(),
-    scenes: [],
-    cameras: [],
-    asset: {},
-    parser: {} as any,
-    userData: {},
-    nodes: new Proxy(
-        {},
-        {
-            get: (target, prop) => new THREE.Mesh()
-        }
-    ),
-    materials: new Proxy(
-        {},
-        {
-            get: (target, prop) => new THREE.MeshStandardMaterial()
-        }
-    )
-};
 
 // Die Komponenten Dog und Duck verfügen über keine Funktionen
 // ausser der Darstellung der Modelle
