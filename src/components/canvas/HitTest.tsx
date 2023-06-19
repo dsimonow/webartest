@@ -54,7 +54,9 @@ export function HitTest() {
         enabled={transformControlsEnabled} 
         showX={transformControlsEnabled} showY={transformControlsEnabled} showZ={transformControlsEnabled}  
         position={[fPosition.x, fPosition.y, fPosition.z]} >
+          <Suspense fallback={<Text>Loading</Text>}>
             <Scenario  />
+          </Suspense>
         </TransformControls>
       </group>
       

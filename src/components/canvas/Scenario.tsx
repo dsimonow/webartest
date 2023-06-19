@@ -15,7 +15,6 @@ export function Scenario(...props) {
         <>
             <Suspense fallback={<Text>Loading</Text>}>
                 <Scene scale={scenarioSize} />
-                
             </Suspense>
         </>
     )
@@ -38,28 +37,36 @@ export default function Scene({ ...props }) {
                     name="ClosetFire"
                     position={[2, -13, 16]}
                     >
-                        <FireSimulator index={0}/>
+                        <Suspense fallback={<Text>Loading</Text>}>
+                            <FireSimulator index={0}/>
+                        </Suspense>
                     </group>
                     <group
                     scale={[1, 1, 1]}
                     name="RadioFire"
                     position={[2, -13, 10]}
                     >
-                        <FireSimulator index={1} />
+                        <Suspense fallback={<Text>Loading</Text>}>
+                            <FireSimulator index={1} />
+                        </Suspense>
                     </group>
                     <group
                     scale={[1, 1, 1]}
                     name="TVFire"
                     position={[2, -13, 0]}
                     >
-                        <FireSimulator index={2} />
+                        <Suspense fallback={<Text>Loading</Text>}>
+                            <FireSimulator index={2} />
+                        </Suspense>
                     </group>
                     <group
                     scale={[3, 1, 3]}
                     name="SofaBig"
                     position={[-17, -13, 3]}
-                    >
-                        <FireSimulator index={3} />
+                    > 
+                        <Suspense fallback={<Text>Loading</Text>}>
+                            <FireSimulator index={3} />
+                        </Suspense>
                     </group>
                 </group>
 

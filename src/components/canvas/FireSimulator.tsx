@@ -29,7 +29,6 @@ export function FireSimulator(props: FireSimulatorProps) {
     const [fireIntensity, setFireIntensity] = useState(100)
     const [fireHeight, setFireHeight] = useState(5)
     
-
     const [stepsDone, setDone] = useState(false)
     let timeRemaining = useRef(5); 
     const [time, setTime] = useState(0)
@@ -40,7 +39,6 @@ export function FireSimulator(props: FireSimulatorProps) {
             setTime(time+delta)
             setFireIntensity(2 + Math.sin(time * Math.PI * 2) * Math.cos(time * Math.PI * 1.5) * 0.25)
             setFireHeight((fireAdjuster + Math.sin(time * Math.PI * 5 ) * Math.cos(time * Math.PI * 1.5) * 2))
-        
             //******************* */
             // Fire Progress Steps, Countdown Timer
             //******************* */

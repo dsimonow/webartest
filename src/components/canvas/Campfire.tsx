@@ -22,8 +22,8 @@ export function Model(props: JSX.IntrinsicElements['group']) {
   return (
     <group {...props} dispose={null}>
       <Suspense fallback={<Text>Loading Asset</Text>}>
-      <mesh geometry={nodes.campfire.geometry} material={materials.None} />
-      <MeshWobbleMaterial factor={1} speed={10} color="#f25042"  />
+        <mesh geometry={nodes.campfire.geometry} material={materials.None} />
+        <MeshWobbleMaterial factor={1} speed={10} color="#f25042"  />
       </Suspense>
     </group>
   )
