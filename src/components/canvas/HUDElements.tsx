@@ -4,6 +4,7 @@ import { useScenarioStore, useTransformControlsStore, useFireSimulationStore } f
 import { Sphere, Hud, OrthographicCamera, ScreenSpace } from "@react-three/drei";
 import { Interactive} from "@react-three/xr";
 import { useThree } from '@react-three/fiber'
+import { useState } from "react";
 
  
 export function HUDElements() {
@@ -16,21 +17,38 @@ export function HUDElements() {
     const decreaseScenarioSize = useScenarioStore((state) => state.decreaseSize);
     const scenarioSize = useScenarioStore((state) => state.size);
     const setFireState = useFireSimulationStore((state) => state.setFireState);
+    const [sceneStarted, setStartScene] = useState(false)
 
     return(
             <Hud renderPriority={1}>
                 <ambientLight intensity={1} />
                 <pointLight position={[200, 200, 100]} intensity={0.5} />
                 <OrthographicCamera makeDefault position={[0, 0, 50]}>
-                    <Interactive onSelect={() => setFireState(0,"ignite")}>
+                    <group visible={!sceneStarted}>
+                    <Interactive onSelect={() => {
+                        // XR Deactivate and Hide
+                        if(!sceneStarted){
+                            setFireState(0, "ignite")
+                            setStartScene(true)
+                        }   
+                    }
+                        }>
                         <Sphere
                             position={[75, -130, -500]}
                             scale={15}
-                            onClick={() => setFireState(0, "ignite")}
+                            onClick={() => {
+                                // XR Deactivate and Hide
+                                if (!sceneStarted) {
+                                    setFireState(0, "ignite")
+                                    setStartScene(true)
+                                }
+                            }
+                        }
                         >
                             <meshPhysicalMaterial color={scenarioSize < 0.010 ? ('#DDA0DD') : '#1E90FF'} />
                         </Sphere>
                     </Interactive>
+                    </group>
                     <Interactive onSelect={() => increaseScenarioSize()}>
                         <Sphere 
                             position={[110, -130, -500]} 

@@ -7,7 +7,7 @@ import { PerspectiveCamera, useDepthBuffer, Cloud } from '@react-three/drei'
 import { Text} from "@react-three/drei";
 import { useScenarioStore} from "./store";
 import { FireSimulator } from './FireSimulator';
-
+import { useFireSimulationStore } from './store';
 
 export function Scenario(...props) {
     const scenarioSize = useScenarioStore((state) => state.size);
@@ -22,8 +22,9 @@ export function Scenario(...props) {
 
 
 export default function Scene({ ...props }) {
-    const { nodes, materials } = useSpline('https://prod.spline.design/8LOippIu-HKXP6em/scene.splinecode')
+    const allStepsDone = useFireSimulationStore((state) => state.stepsDone)
 
+    const { nodes, materials } = useSpline('https://prod.spline.design/8LOippIu-HKXP6em/scene.splinecode')
     return (
         <>
             <group {...props} dispose={null}>
@@ -66,6 +67,36 @@ export default function Scene({ ...props }) {
                     > 
                         <Suspense fallback={<Text>Loading</Text>}>
                             <FireSimulator index={3} />
+                        </Suspense>
+                    </group>
+                    <group
+                        scale={5}
+                        name="RoomSmoke"
+                        position={[-17, -18, -5]}
+                    >
+                        <Suspense fallback={<Text>Loading</Text>}>
+                            <Cloud 
+                                visible={allStepsDone}
+                                scale={1}
+                                color={'black'}
+                                position={[0, 5, 0]}
+                                opacity={0.8}
+                                speed={0.2} // Rotation speed
+                                width={5} // Width of the full cloud
+                                depth={0.5} // Z-dir depth
+                                segments={20} // Number of particles 
+                            />
+                            <Cloud
+                                visible={allStepsDone}
+                                scale={1}
+                                color={'black'}
+                                position={[-6, 5, 3]}
+                                opacity={0.8}
+                                speed={0.2} // Rotation speed
+                                width={1} // Width of the full cloud
+                                depth={1} // Z-dir depth
+                                segments={5} // Number of particles 
+                            />
                         </Suspense>
                     </group>
                 </group>

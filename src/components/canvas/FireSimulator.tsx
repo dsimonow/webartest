@@ -1,7 +1,7 @@
 'use client'
 import { Billboard, Cloud, Sphere, SpotLight, useDepthBuffer, useGLTF} from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Suspense, useRef, useState, useEffect, useMemo} from "react";
+import { Suspense, useRef, useState, useEffect, useMemo, useTransition } from "react";
 import * as THREE from 'three'
 import { Model as Campfire } from './Campfire'
 import { useFireSimulationStore } from './store';
@@ -19,7 +19,7 @@ export function FireSimulator(props: FireSimulatorProps) {
     const externalFireStates = useFireSimulationStore((state) => state.fireStates)
     const externalFireState = externalFireStates[index]
     const setFireState = useFireSimulationStore((state) => state.setFireState);
-
+    const setAllStepsDone = useFireSimulationStore((state) => state.setStepsDone)
     
     const [fireAdjuster, setFireAdjuster] = useState(2)
     const [internalFireState, setInternalFireState] = useState("off")
@@ -51,7 +51,7 @@ export function FireSimulator(props: FireSimulatorProps) {
             setInternalFireState("ignite")
             setFireAdjuster(2)
             timeRemaining.current = 40 - (index * 11.6)
-            console.log("Step Ignite " )
+                console.log(index +" Step Ignite " )
             }
             if ((timeRemaining.current <= 0 && internalFireState == "ignite")) {
                 if (index < externalFireStates.length - 1) {
@@ -60,49 +60,54 @@ export function FireSimulator(props: FireSimulatorProps) {
                 setInternalFireState("mid")
                 setFireAdjuster(5)
                     timeRemaining.current = 20 - (index * 6.66)
-                console.log("Step Mid ")
+                console.log(index +" Step Mid ")
             }
             if ((timeRemaining.current <= 0 && internalFireState == "mid")) {
                 setInternalFireState("end")
                 setFireAdjuster(10)
+                
+                console.log(index+" Step End ")
+                if(index == 3){
+                    setAllStepsDone()
+                }
                 setDone(true)
-                console.log("Step End ")
             }}
         }
     })
 
     return(
-        <group visible={internalFireState != 'off' ? (true) : false} name='Schrankfeuer'>
-            <Suspense fallback={null}>
+        <>
             <pointLight position={[-3, -10, 17]} decay={0.5} distance={0.03} intensity={200} color={'red'} />
             <pointLight position={[-3, -5, 17]} decay={2} distance={0.1} intensity={fireIntensity} color={'orange'} />
-            <Campfire 
-            position={[0,-1,0]} scale={[8, fireHeight,8]} />
-            
-            <Cloud
-                visible={true}
-                scale={1}
-                color={smokeColor}
-                position={[0, 10, 0]}
-                opacity={0.6}
-                speed={smokeSpeed} // Rotation speed
-                width={1} // Width of the full cloud
-                depth={1} // Z-dir depth
-                segments={10} // Number of particles 
-            />
-            <Cloud
-                visible={true}
-                scale={0.5}
-                color={smokeColor}
-                position={[0, 5, 0]}
-                opacity={0.6}
-                speed={smokeSpeed} // Rotation speed
-                width={1} // Width of the full cloud
-                depth={0.1} // Z-dir depth
-                segments={10} // Number of particles 
-            />
-            </Suspense>
-        </group>
+            <group visible={internalFireState != 'off' ? (true) : false} name='Schrankfeuer'>
+                <Campfire 
+                position={[0,-1,0]} scale={[8, fireHeight,8]} />
+                <Suspense fallback={null}>
+                <Cloud
+                    visible={true}
+                    scale={1}
+                    color={smokeColor}
+                    position={[0, 10, 0]}
+                    opacity={0.6}
+                    speed={smokeSpeed} // Rotation speed
+                    width={1} // Width of the full cloud
+                    depth={1} // Z-dir depth
+                    segments={10} // Number of particles 
+                />
+                <Cloud
+                    visible={true}
+                    scale={0.5}
+                    color={smokeColor}
+                    position={[0, 5, 0]}
+                    opacity={0.6}
+                    speed={smokeSpeed} // Rotation speed
+                    width={1} // Width of the full cloud
+                    depth={0.1} // Z-dir depth
+                    segments={10} // Number of particles 
+                />
+                </Suspense>
+            </group>
+        </>
 
     )
 }

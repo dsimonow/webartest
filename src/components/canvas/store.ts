@@ -55,6 +55,8 @@ type FireStates = "off" | "ignite" | "mid" | "end";
 type FireSimulationState = {
     fireStates: FireStates[];
     setFireState: (index: number, newState: FireStates) => void;
+    stepsDone: boolean
+    setStepsDone: () => void;
 };
 
 export const useFireSimulationStore = create<FireSimulationState>((set) => ({
@@ -65,4 +67,10 @@ export const useFireSimulationStore = create<FireSimulationState>((set) => ({
             newFireStates[index] = newState;
             return { fireStates: newFireStates };
         }),
+    stepsDone: false,
+    setStepsDone: () =>
+        set((state) => ({
+            stepsDone:
+                state.stepsDone = true
+        })),
 }));
