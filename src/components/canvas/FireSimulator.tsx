@@ -1,8 +1,7 @@
 'use client'
-import { Billboard, Cloud, Sphere, SpotLight, useDepthBuffer, useGLTF} from '@react-three/drei'
+import { Cloud, PositionalAudio} from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Suspense, useRef, useState, useEffect, useMemo, useTransition } from "react";
-import * as THREE from 'three'
+import { Suspense, useRef, useState } from "react";
 import { Model as Campfire } from './Campfire'
 import { useFireSimulationStore } from './store';
 
@@ -77,6 +76,7 @@ export function FireSimulator(props: FireSimulatorProps) {
         <>
             <pointLight position={[-3, -10, 17]} decay={0.5} distance={0.03} intensity={200} color={'red'} />
             <pointLight position={[-3, -5, 17]} decay={2} distance={0.1} intensity={fireIntensity} color={'orange'} />
+            {(externalFireStates[0] == "ignite") && <PositionalAudio autoplay loop={false} url="/feuer.mp4" distance={1} load={"/feuer.mp4"} />}
             <group visible={internalFireState != 'off' ? (true) : false} name='Schrankfeuer'>
                 <Campfire 
                 position={[0,-1,0]} scale={[8, fireHeight,8]} />

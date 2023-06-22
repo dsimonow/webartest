@@ -20,7 +20,6 @@ export function Scenario(...props) {
     )
 }
 
-
 export default function Scene({ ...props }) {
     const allStepsDone = useFireSimulationStore((state) => state.stepsDone)
 
