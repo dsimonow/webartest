@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { useRef, Suspense, useState} from "react";
 import { useFrame } from '@react-three/fiber'
 import useSpline from '@splinetool/r3f-spline'
-import { PerspectiveCamera, useDepthBuffer, Cloud } from '@react-three/drei'
+import { PerspectiveCamera, useDepthBuffer, Cloud, PositionalAudio } from '@react-three/drei'
 import { Text} from "@react-three/drei";
 import { useScenarioStore} from "./store";
 import { FireSimulator } from './FireSimulator';
@@ -22,7 +22,7 @@ export function Scenario(...props) {
 
 export default function Scene({ ...props }) {
     const allStepsDone = useFireSimulationStore((state) => state.stepsDone)
-
+    const fireStates = useFireSimulationStore((state) => state.fireStates)
     const { nodes, materials } = useSpline('https://prod.spline.design/8LOippIu-HKXP6em/scene.splinecode')
     return (
         <>
@@ -38,6 +38,7 @@ export default function Scene({ ...props }) {
                     position={[2, -13, 16]}
                     >
                         <Suspense fallback={<Text>Loading</Text>}>
+                            {(fireStates[0] == "ignite") && <PositionalAudio autoplay loop={false} url="/feuer.mp4" distance={1} load={"/feuer.mp4"} />}
                             <FireSimulator index={0}/>
                         </Suspense>
                     </group>
