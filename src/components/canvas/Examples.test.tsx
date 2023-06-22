@@ -28,9 +28,6 @@ test('Hover Testen von Blob', async() => {
         <BlobExample />
     )
 
-    //console.log(renderer.scene.findByType('SphereGeometry'))
-    //console.log(renderer.scene.findAllByProps({ geometry: 'SphereGeometry'}))
-    //console.log(renderer.scene.children[0])
     // Element mit dem onPointerHover finden
     const mesh = renderer.scene.findByType('Mesh')
     // Element mit dem zu testenden Element finden
