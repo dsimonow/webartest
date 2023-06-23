@@ -1,7 +1,7 @@
 'use client'
 
 import { useScenarioStore, useTransformControlsStore, useFireSimulationStore } from "./store";
-import { Sphere, Hud, OrthographicCamera, ScreenSpace } from "@react-three/drei";
+import { Sphere, Hud, OrthographicCamera, ScreenSpace, Text } from "@react-three/drei";
 import { Interactive} from "@react-three/xr";
 import { useThree } from '@react-three/fiber'
 import { useState } from "react";
@@ -33,6 +33,7 @@ export function HUDElements() {
                         }   
                     }
                         }>
+                        <Text color={"black"} scale={10} position={[75, -130, -450]}>Feuer</Text>
                         <Sphere
                             position={[75, -130, -500]}
                             scale={15}
@@ -45,29 +46,32 @@ export function HUDElements() {
                             }
                         }
                         >
-                            <meshPhysicalMaterial color={scenarioSize < 0.010 ? ('#DDA0DD') : '#1E90FF'} />
+                            <meshPhysicalMaterial color={'#1E90FF'} />
                         </Sphere>
                     </Interactive>
                     </group>
                     <Interactive onSelect={() => increaseScenarioSize()}>
+                        <Text color={"black"} scale={20} position={[110, -130, -400]} >+</Text>
                         <Sphere 
-                            position={[110, -130, -500]} 
+                        position={[110, -130, -500]} 
                         scale={15} 
                         onClick={() => increaseScenarioSize()} 
                         >
-                        <meshPhysicalMaterial color={scenarioSize < 0.010 ? ('#DDA0DD') : '#1E90FF'} />
+                        <meshPhysicalMaterial color={scenarioSize < 0.010 ? ('#DFFF00') : '#32CD32'} />
                         </Sphere>
                     </Interactive>
                     <Interactive onSelect={() => decreaseScenarioSize()}>
+                        <Text color={"black"} scale={30} position={[145, -130, -400]} >-</Text>
                         <Sphere
                             position={[145, -130, -500]}
                             scale={15}
                         onClick={() => decreaseScenarioSize()}
                         >
-                        <meshPhysicalMaterial color={scenarioSize > 0.0001 ? ('#DDA0DD') : '#1E90FF'} />
+                        <meshPhysicalMaterial color={scenarioSize > 0.0001 ? ('#808000') : '#1E90FF'} />
                         </Sphere>
                     </Interactive>
                     <Interactive onSelect={() => toggleTransformControlEnabled()}>
+                    <Text color={"black"} scale={10} position={[180, -130, -400]}>Rotate</Text>
                         <Sphere 
                         position={[180, -130, -500]} 
                         scale={15} 
