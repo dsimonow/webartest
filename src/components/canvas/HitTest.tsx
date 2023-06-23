@@ -49,7 +49,7 @@ export function HitTest() {
       </Interactive>
       
       <group visible={hitEnabled} >
-        <PivotControls depthTest={false} scale={0.5} visible={transformControlsEnabled} >
+        <PivotControls depthTest={false} activeAxes={[transformControlsEnabled, false, transformControlsEnabled]} scale={0.5} visible={transformControlsEnabled} >
           <Suspense fallback={<Text>Loading</Text>}>
             <Scenario  />
           </Suspense>
