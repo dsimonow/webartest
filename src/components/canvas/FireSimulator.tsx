@@ -3,6 +3,7 @@ import { Cloud, PositionalAudio} from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { Suspense, useRef, useState } from "react";
 import { Model as Campfire } from './Campfire'
+import { useXR } from '@react-three/xr';
 import { useFireSimulationStore } from './store';
 
 
@@ -12,12 +13,29 @@ type FireSimulatorProps = {
 };
 
 export function FireSimulator(props: FireSimulatorProps) {
+    const {
+        // An array of connected `XRController`
+        controllers,
+        // Whether the XR device is presenting in an XR session
+        isPresenting,
+        // Whether hand tracking inputs are active
+        isHandTracking,
+        // A THREE.Group representing the XR viewer or player
+        player,
+        // The active `XRSession`
+        session,
+        // `XRSession` foveation. This can be configured as `foveation` on <XR>. Default is `0`
+        foveation,
+        // `XRSession` reference-space type. This can be configured as `referenceSpace` on <XR>. Default is `local-floor`
+        referenceSpace
+    } = useXR()
     const index = props.index
     // Store
     const externalFireStates = useFireSimulationStore((state) => state.fireStates)
     const externalFireState = externalFireStates[index]
     const setFireState = useFireSimulationStore((state) => state.setFireState);
     const setAllStepsDone = useFireSimulationStore((state) => state.setStepsDone)
+    const allStepsDone = useFireSimulationStore((state) => state.stepsDone)
     
     const [fireAdjuster, setFireAdjuster] = useState(2)
     const [internalFireState, setInternalFireState] = useState("off")
@@ -65,24 +83,31 @@ export function FireSimulator(props: FireSimulatorProps) {
                 setFireAdjuster(10)
                 
                 if(index == 3){
-                    setAllStepsDone()
+                    timeRemaining.current = 30
+                } else {
+                    setDone(true)
                 }
+                
+            }
+                if ((timeRemaining.current <= 0 && allStepsDone == false && internalFireState == "end" && index == 3)){
                 setDone(true)
-            }}
+                setAllStepsDone()
+            }
+        
+        }
         }
     })
 
     return(
         <>
-            <pointLight position={[-3, -10, 17]} decay={0.5} distance={0.03} intensity={200} color={'red'} />
-            <pointLight position={[-3, -5, 17]} decay={2} distance={0.1} intensity={fireIntensity} color={'orange'} />
-            {(externalFireStates[index] == "ignite") && <PositionalAudio autoplay loop url="/feuereffekt.mp3" distance={0.4} load={"/feuer.mp4"} />}
-            <group visible={internalFireState != 'off' ? (true) : false} name='Schrankfeuer'>
+            {(externalFireStates[index] == "ignite") && <PositionalAudio  autoplay loop={!allStepsDone} url="/feuereffekt.mp3" distance={0.2} load={"/feuer.mp4"} />}
+            <group visible={internalFireState != 'off' ? (true) : false } name='Schrankfeuer'>
+                <group visible={allStepsDone != true ? (true) : false}>
                 <Campfire 
                 position={[0,-1,0]} scale={[8, fireHeight,8]} />
                 <Suspense fallback={null}>
                 <Cloud
-                    visible={true}
+                    visible={!isPresenting}
                     scale={1}
                     color={smokeColor}
                     position={[0, 10, 0]}
@@ -93,7 +118,7 @@ export function FireSimulator(props: FireSimulatorProps) {
                     segments={10} // Number of particles 
                 />
                 <Cloud
-                    visible={true}
+                    visible={!isPresenting}
                     scale={0.5}
                     color={smokeColor}
                     position={[0, 5, 0]}
@@ -104,6 +129,7 @@ export function FireSimulator(props: FireSimulatorProps) {
                     segments={10} // Number of particles 
                 />
                 </Suspense>
+                </group>
             </group>
         </>
 
