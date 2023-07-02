@@ -1,16 +1,16 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { Canvas} from '@react-three/fiber'
+import { Canvas, useThree} from '@react-three/fiber'
 import { ARButton, XR } from '@react-three/xr'
-import {  PerspectiveCamera, OrbitControls, Stats } from "@react-three/drei";
+import {  PerspectiveCamera, OrbitControls, Stats, Text } from "@react-three/drei";
+import { Suspense, useRef } from "react"
 
 
 const HitTest = dynamic(() => import('@/components/canvas/HitTest').then((mod) => mod.HitTest), { ssr: false })
 const HUDElements = dynamic(() => import('@/components/canvas/HUDElements').then((mod) => mod.HUDElements), { ssr: false })
 
 
-  //
 export default function Page() {
   
   return (
@@ -19,8 +19,10 @@ export default function Page() {
       <Canvas >
         <XR>
           <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-          <HUDElements />
-          <HitTest />
+            <HUDElements />
+            <Suspense fallback={<Text>Loading...</Text>}>
+            <HitTest />
+          </Suspense>
         </XR>
           
         <hemisphereLight name="Default Ambient Light" intensity={0.25} color="#eaeaea" />

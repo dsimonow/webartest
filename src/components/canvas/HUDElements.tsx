@@ -4,7 +4,7 @@ import { useScenarioStore, useTransformControlsStore, useFireSimulationStore } f
 import { Sphere, Hud, OrthographicCamera, ScreenSpace, Text, Box, Billboard, Html } from "@react-three/drei";
 import { Interactive} from "@react-three/xr";
 import { useThree } from '@react-three/fiber'
-import { useState } from "react";
+import { useState, Suspense } from "react";
 
  
 export function HUDElements() {

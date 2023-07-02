@@ -1,13 +1,14 @@
 'use client'
 import dynamic from 'next/dynamic'
-import { useRef, Suspense, useState} from "react";
+import { useRef, Suspense, useState, useEffect} from "react";
 import { useFrame } from '@react-three/fiber'
 import useSpline from '@splinetool/r3f-spline'
-import { PerspectiveCamera, useDepthBuffer, Cloud, PositionalAudio } from '@react-three/drei'
+import { PerspectiveCamera, useDepthBuffer, Cloud, PositionalAudio, Preload, BakeShadows } from '@react-three/drei'
 import { Text} from "@react-three/drei";
 import { useScenarioStore} from "./store";
 import { FireSimulator } from './FireSimulator';
 import { useFireSimulationStore } from './store';
+import * as THREE from 'three'
 
 export function Scenario(...props) {
     const scenarioSize = useScenarioStore((state) => state.size);
@@ -15,15 +16,43 @@ export function Scenario(...props) {
         <>
             <Suspense fallback={<Text>Loading</Text>}>
                 <Scene scale={scenarioSize} />
+                <Preload all />
+                <BakeShadows />
             </Suspense>
         </>
     )
 }
 
+/*<Suspense fallback={<Text>Loading</Text>}>
+                            <Cloud 
+                                visible={allStepsDone}
+                                scale={1}
+                                color={'black'}
+                                position={[0, 5, 0]}
+                                opacity={0.8}
+                                speed={0.2} // Rotation speed
+                                width={5} // Width of the full cloud
+                                depth={0.5} // Z-dir depth
+                                segments={20} // Number of particles 
+                            />
+                            <Cloud
+                                visible={allStepsDone}
+                                scale={1}
+                                color={'black'}
+                                position={[-6, 5, 3]}
+                                opacity={0.8}
+                                speed={0.2} // Rotation speed
+                                width={1} // Width of the full cloud
+                                depth={1} // Z-dir depth
+                                segments={5} // Number of particles 
+                            />
+                        </Suspense> */
+
 export default function Scene({ ...props }) {
     const allStepsDone = useFireSimulationStore((state) => state.stepsDone)
     const fireStates = useFireSimulationStore((state) => state.fireStates)
     const { nodes, materials } = useSpline('https://prod.spline.design/8LOippIu-HKXP6em/scene.splinecode')
+    
     return (
         <>
             <group {...props} dispose={null}>
@@ -61,44 +90,15 @@ export default function Scene({ ...props }) {
                         </Suspense>
                     </group>
                     <group
-                    scale={[3, 1, 3]}
+                    scale={[3, 3, 3]}
                     name="SofaBig"
-                    position={[-17, -13, 3]}
+                    position={[-17, -26, 3]}
                     > 
                         <Suspense fallback={<Text>Loading</Text>}>
                             <FireSimulator index={3} />
                         </Suspense>
                     </group>
-                    <group
-                        scale={5}
-                        name="RoomSmoke"
-                        position={[-17, -18, -5]}
-                    >
-                        <Suspense fallback={<Text>Loading</Text>}>
-                            <Cloud 
-                                visible={allStepsDone}
-                                scale={1}
-                                color={'black'}
-                                position={[0, 5, 0]}
-                                opacity={0.8}
-                                speed={0.2} // Rotation speed
-                                width={5} // Width of the full cloud
-                                depth={0.5} // Z-dir depth
-                                segments={20} // Number of particles 
-                            />
-                            <Cloud
-                                visible={allStepsDone}
-                                scale={1}
-                                color={'black'}
-                                position={[-6, 5, 3]}
-                                opacity={0.8}
-                                speed={0.2} // Rotation speed
-                                width={1} // Width of the full cloud
-                                depth={1} // Z-dir depth
-                                segments={5} // Number of particles 
-                            />
-                        </Suspense>
-                    </group>
+
                 </group>
 
 
