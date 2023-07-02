@@ -5,6 +5,7 @@ import * as Fiber from '@react-three/fiber';
 import * as THREE from 'three'
 import { GLTF} from 'three-stdlib';
 import { MockGLTFResult } from '../../../setupTests';
+import { XR } from "@react-three/xr";
 
 
 const { ScenarioExample } = composeStories(stories,
@@ -15,7 +16,9 @@ const { ScenarioExample } = composeStories(stories,
 test('Scenario Darstellung', async () => {
     jest.spyOn(Fiber, 'useLoader').mockImplementation(() => MockGLTFResult);
     const renderer = await ReactThreeTestRenderer.create(
+        <XR>
         <ScenarioExample />
+        </XR>
     )
     
     // Besitzt keine Logik
