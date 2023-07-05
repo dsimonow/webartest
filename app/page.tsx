@@ -67,7 +67,7 @@ export default function Page() {
           <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
             <View orbit className='relative h-full animate-bounce sm:h-48 sm:w-full'>
               <Suspense fallback={null}>
-                <Duck route='/blob' scale={2} position={[0, -1.6, 0]} />
+                <Duck scale={2} position={[0, -1.6, 0]} />
                 <Common color={'lightblue'} />
               </Suspense>
             </View>

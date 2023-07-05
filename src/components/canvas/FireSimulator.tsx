@@ -132,7 +132,7 @@ export function FireSimulator(props: FireSimulatorProps) {
 //<Campfire position={[0,-1,0]} scale={[8, fireHeight,8]} / >
 
 function Swarm({ count }) {
-    const mesh = useRef()
+    const mesh = useRef(null)
     const light = useRef()
     const { viewport, mouse } = useThree()
 
