@@ -6,6 +6,7 @@ import { Sphere } from '@react-three/drei'
 import { useFireSimulationStore } from './store';
 
 interface Args {
+    ref?: any;
     disableDecorator?: boolean;
     // ... other properties
 }
